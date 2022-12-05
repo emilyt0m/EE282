@@ -46,11 +46,13 @@
 
 Histograms were created in R Studio using ggplot2. Full code can be found in `/code/scripts/length_GC_plotting.R`
 
-1.  sequence length distribution ![](images/paste-AA84B58E.png)
+1.  sequence length distribution
+
+    ![](output/figures/lengthless.png)
 
 2.  GC% distribution
 
-    ![](images/paste-6F28F25B.png)
+    ![](output/figures/GCless.png)
 
 3.  cumulative sequence size
 
@@ -60,17 +62,17 @@ Histograms were created in R Studio using ggplot2. Full code can be found in `/c
 
     plotCDF2 seq_less.lengths CDFless.png
 
-![](images/CDFless.png)
+![](output/figures/CDFless.png)
 
 \> 100kb
 
 1.  sequence length distribution
 
-    ![](images/paste-3D5B3DB1.png)
+    ![](output/figures/lengthmore.png)
 
 2.  GC% distribution
 
-    ![](images/paste-2D7E47EB.png)
+    ![](output/figures/GCmore.png)
 
 3.  cumulative sequence size
 
@@ -78,7 +80,7 @@ Histograms were created in R Studio using ggplot2. Full code can be found in `/c
 
         plotCDF2 seq_more.lengths CDFmore.png
 
-    ![](images/CDFmore.png)
+    ![](output/figures/CDFmore.png)
 
 ### Genome Assembly
 
