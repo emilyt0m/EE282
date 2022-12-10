@@ -1,0 +1,22 @@
+#!/bin/bash
+#SBATCH --job-name=featurecount
+#SBATCH -A class-ee282
+#SBATCH -p standard
+#SBATCH --nodes=1
+#SBATCH --ntasks=4
+#SBATCH --cpus-per-task=1
+#SBATCH --error=slurm-%x.%j.err
+#SBATCH --output=slurm-%x.%j.out
+
+module load subread/2.0.1
+
+RPATH='/pub/etom2/classrepos/EE282/data/processed/RNA-Seq_siE2-ARPE19_04-2021/featurecount/UCSC_hg38/hg38.refGene.gtf'
+IPATH='/pub/etom2/classrepos/EE282/data/processed/RNA-Seq_siE2-ARPE19_04-2021/alignment'
+OPATH='/pub/etom2/classrepos/EE282/data/processed/RNA-Seq_siE2-ARPE19_04-2021/featurecount/counts'
+
+featureCounts -s 2 -p -t exon -g gene_id -T 4 \
+-a ${RPATH} \
+-o ${OPATH}/nR136-L1-G2-P54-TCTTCCGA-TTGTAACC_counts.txt ${IPATH}/nR136-L1-G2-P54-TCTTCCGA-TTGTAACC_sorted.bam
+
+module unload subread/2.0.1
+

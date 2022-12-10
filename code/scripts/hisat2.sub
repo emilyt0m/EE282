@@ -1,0 +1,28 @@
+#!/bin/bash
+#SBATCH --job-name=hisat2
+#SBATCH -A class-ee282
+#SBATCH -p standard
+#SBATCH --nodes=1
+#SBATCH --ntasks=4
+#SBATCH --cpus-per-task=1
+#SBATCH --error=slurm-%x.%j.err
+#SBATCH --output=slurm-%x.%j.out
+
+module load hisat2/2.2.1
+module load samtools/1.10
+
+IPATH='/pub/etom2/classrepos/EE282/data/processed/RNA-Seq_siE2-ARPE19_04-2021/trim';
+OPATH='/pub/etom2/classrepos/EE282/data/processed/RNA-Seq_siE2-ARPE19_04-2021/alignment';
+SPATH='/pub/etom2/classrepos/EE282/data/processed/RNA-Seq_siE2-ARPE19_04-2021/alignment/alignment_summary';
+RPATH='/pub/etom2/classrepos/EE282/data/processed/RNA-Seq_siE2-ARPE19_04-2021/alignment/grch38_genome/grch38/genome';
+
+hisat2 -p 8 -t --qc-filter  --rna-strandness RF \
+--summary-file ${SPATH}/nR136-L1-G2-P54-TCTTCCGA-TTGTAACC.align \
+-x ${RPATH} --dta-cufflinks \
+-1 ${IPATH}/nR136-L1-G2-P54-TCTTCCGA-TTGTAACC-trimmed_1P.fq.gz \
+-2 ${IPATH}/nR136-L1-G2-P54-TCTTCCGA-TTGTAACC-trimmed_2P.fq.gz | samtools view -@ 8 -bS -> ${OPATH}/nR136-L1-G2-P54-TCTTCCGA-TTGTAACC_align.bam
+
+samtools sort -@ 8 -o ${OPATH}/nR136-L1-G2-P54-TCTTCCGA-TTGTAACC_sorted.bam ${OPATH}/nR136-L1-G2-P54-TCTTCCGA-TTGTAACC_align.bam
+samtools index -@ 8 ${OPATH}/nR136-L1-G2-P54-TCTTCCGA-TTGTAACC_sorted.bam \
+
+module unload hisat2/2.2.1

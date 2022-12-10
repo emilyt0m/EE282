@@ -1,0 +1,20 @@
+#!/bin/bash
+
+#SBATCH --job-name=fastqc
+#SBATCH -A class-ee282
+#SBATCH -p standard
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=4
+#SBATCH --error=slurm-%x.%j.err
+#SBATCH --output=slurm-%x.%j.out
+
+module load fastqc/0.11.9
+
+fastqc -t 8 /pub/etom2/classrepos/EE282/data/raw/RNA-Seq_siE2-ARPE19_04-2021/*.txt -o /pub/etom2/classrepos/EE282/data/raw/RNA-Seq_siE2-ARPE19_04-2021/fastqc
+
+mkdir /pub/etom2/classrepos/EE282/data/raw/RNA-Seq_siE2-ARPE19_04-2021/fastqc/html
+
+mv /pub/etom2/classrepos/EE282/data/raw/RNA-Seq_siE2-ARPE19_04-2021/fastqc/*.html /pub/etom2/classrepos/EE282/data/raw/RNA-Seq_siE2-ARPE19_04-2021/fastqc/html
+
+module unload fastqc/0.11.9
