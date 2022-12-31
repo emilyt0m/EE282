@@ -1,0 +1,26 @@
+#!/bin/bash
+
+#SBATCH --job-name=trim
+#SBATCH -A class-ee282
+#SBATCH -p standard
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=4
+#SBATCH --error=slurm-%x.%j.err
+#SBATCH --output=slurm-%x.%j.out
+
+module load trimmomatic/0.39
+
+FPATH='/pub/etom2/classrepos/EE282/data/raw/RNA-Seq_siE2-ARPE19_04-2021';
+OPATH='/pub/etom2/classrepos/EE282/data/processed/RNA-Seq_siE2-ARPE19_04-2021/trim';
+ADPATH='/opt/apps/trimmomatic/0.39/adapters/TruSeq3-PE-2.fa';
+
+java -jar /opt/apps/trimmomatic/0.39/trimmomatic-0.39.jar PE -threads 8 -phred33 \
+	-baseout ${OPATH}/nR136-L1-G2-P56-TCGTTATA-TGCATACC-trimmed.fq.gz \
+	${FPATH}/nR136-L1-G2-P56-TCGTTATA-TGCATACC-READ1-Sequences.txt \
+	${FPATH}/nR136-L1-G2-P56-TCGTTATA-TGCATACC-READ2-Sequences.txt \
+	ILLUMINACLIP:${ADPATH}:2:30:10 \
+	SLIDINGWINDOW:4:15 \
+	MINLEN:20 \
+
+module unload trimmomatic/0.39
